@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth, UserRole } from '../context/AuthContext';
 import { Mail, Lock, LogIn, Chrome, ArrowRight, ShieldCheck } from 'lucide-react';
+import { ThreeDAnimation } from '../components/ThreeDAnimation';
 import toast from 'react-hot-toast';
 
 export const Login: React.FC = () => {
@@ -48,38 +49,54 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950 overflow-hidden">
       
-      {/* Left side: Premium Branding Column (Hidden on mobile) */}
-      <div className="hidden lg:flex lg:w-1/2 relative flex-col justify-between bg-indigo-950 p-12 text-white overflow-hidden">
-        {/* Gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-indigo-900 via-indigo-950 to-violet-900 opacity-90" />
-        <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-violet-600/20 blur-3xl" />
-        <div className="absolute -bottom-45 -left-40 h-90 w-90 rounded-full bg-indigo-500/20 blur-3xl" />
+      {/* Left side: Premium Interactive 3D Canvas Branding Column */}
+      <div className="hidden lg:flex lg:w-1/2 relative flex-col justify-between bg-indigo-950 p-12 text-white overflow-hidden select-none">
+        
+        {/* Ambient Gradient Background */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-indigo-950 via-slate-950 to-violet-950 opacity-95" />
+        <div className="absolute -top-40 -right-40 h-96 w-96 rounded-full bg-indigo-600/30 blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-45 -left-40 h-96 w-96 rounded-full bg-violet-600/25 blur-3xl pointer-events-none" />
 
-        <div className="relative z-10">
+        {/* Interactive 3D Canvas Scene & Floating Depth Cards */}
+        <ThreeDAnimation />
+
+        {/* Top Brand Header */}
+        <div className="relative z-20 pointer-events-none">
           <div className="flex items-center gap-2.5">
-            <span className="text-3xl">🎓</span>
-            <span className="text-xl font-bold tracking-wider">PlacementPortal</span>
+            <span className="text-3xl filter drop-shadow-md">🎓</span>
+            <span className="text-xl font-extrabold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-200 to-violet-300">
+              PlacementPortal
+            </span>
           </div>
         </div>
 
-        <div className="relative z-10 space-y-4">
-          <h1 className="text-4xl font-extrabold leading-tight tracking-tight">
-            Elevate Your College Placement Process.
+        {/* Center Tagline */}
+        <div className="relative z-20 space-y-4 max-w-lg pointer-events-none my-auto">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-semibold backdrop-blur-md">
+            ✨ Interactive 3D Recruitment Engine
+          </div>
+          <h1 className="text-4xl xl:text-5xl font-extrabold leading-tight tracking-tight drop-shadow-lg text-white">
+            Elevate Your Campus Hiring Pipeline.
           </h1>
-          <p className="text-indigo-200 text-lg max-w-md">
-            Streamlining campus recruitment with automated eligibility engines, Vertex AI-powered resume analyzers, and interactive role dashboards.
+          <p className="text-indigo-200/90 text-base leading-relaxed">
+            Empowering students, HR recruiters, and TPOs with automated CGPA eligibility rules, interactive placement analytics, and Vertex AI Gemini resume matching.
           </p>
         </div>
 
-        <div className="relative z-10 text-xs text-indigo-300">
-          © {new Date().getFullYear()} College Placement Portal. All rights reserved.
+        {/* Footer info */}
+        <div className="relative z-20 text-xs text-indigo-300/80 pointer-events-none flex justify-between items-center">
+          <span>© {new Date().getFullYear()} College Placement Portal</span>
+          <span className="flex items-center gap-1.5 text-[11px] font-medium text-indigo-200">
+            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+            3D WebGL Active
+          </span>
         </div>
       </div>
 
       {/* Right side: Login Form Column */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 md:p-16">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 md:p-16 z-10 bg-white dark:bg-slate-950">
         <div className="w-full max-w-md space-y-8">
           
           <div className="space-y-2">
