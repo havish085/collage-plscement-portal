@@ -795,3 +795,25 @@
 166 http fetch GET 200 https://registry.npmjs.org/@firebase%2ffirestore-compat 11439ms (cache updated)
 167 silly packumentCache corgi:https://registry.npmjs.org/@firebase%2ffirestore-compat set size:undefined disposed:false
 168 silly packumentCache corgi:https://registry.npmjs.org/@firebase%2ffunctions-compat cache-miss
+169 http fetch GET 200 https://registry.npmjs.org/@firebase%2ffunctions-compat 9303ms (cache updated)
+170 silly packumentCache corgi:https://registry.npmjs.org/@firebase%2ffunctions-compat set size:undefined disposed:false
+171 silly ADD node_modules/meshoptimizer
+172 silly ADD node_modules/fflate
+173 silly ADD node_modules/@types/webxr
+174 silly ADD node_modules/@types/stats.js
+175 silly ADD node_modules/@tweenjs/tween.js
+176 silly ADD node_modules/@dimforge/rapier3d-compat
+177 silly ADD node_modules/three
+178 silly ADD node_modules/@types/three
+179 silly ADD node_modules/fsevents
+180 verbose cwd /Users/thavish/.gemini/antigravity/scratch/college-placement-portal
+181 verbose os Darwin 25.6.0
+182 verbose node v24.17.0
+183 verbose npm  v11.13.0
+184 notice
+184 notice New major version of npm available! 11.13.0 -> 12.0.2
+184 notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+184 notice To update run: npm install -g npm@12.0.2
+184 notice  { force: true, Symbol(proc-log.meta): true }
+185 verbose exit 0
+186 info ok
