@@ -5,7 +5,7 @@
 import { db } from './config';
 import { 
   collection, doc, getDocs, getDoc, setDoc, updateDoc, 
-  addDoc, query, where, orderBy, limit, serverTimestamp 
+  addDoc
 } from 'firebase/firestore';
 
 export interface StudentData {
@@ -168,6 +168,24 @@ const DEFAULT_COMPANIES: CompanyData[] = [
     industry: 'IT Services',
     description: 'A global IT service, consulting, and business solutions organization partners with largest businesses.',
     isApproved: true
+  },
+  {
+    uid: 'company-amazon',
+    name: 'Amazon India',
+    email: 'hr-amazon@test.com',
+    website: 'https://amazon.in',
+    industry: 'Cloud & E-Commerce',
+    description: 'Earth\'s most customer-centric company and cloud computing innovator (AWS).',
+    isApproved: true
+  },
+  {
+    uid: 'company-goldman',
+    name: 'Goldman Sachs',
+    email: 'hr-goldman@test.com',
+    website: 'https://goldmansachs.com',
+    industry: 'FinTech & Banking',
+    description: 'Global investment banking, securities and investment management firm.',
+    isApproved: true
   }
 ];
 
@@ -188,7 +206,7 @@ const DEFAULT_JOBS: JobOpening[] = [
     skillsRequired: ['C++', 'Go', 'Data Structures & Algorithms', 'System Design'],
     deadline: '2026-08-30',
     createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-    applicantsCount: 1
+    applicantsCount: 3
   },
   {
     id: 'job-2',
@@ -206,7 +224,7 @@ const DEFAULT_JOBS: JobOpening[] = [
     skillsRequired: ['Linux', 'Docker', 'Kubernetes', 'Python', 'Terraform'],
     deadline: '2026-08-15',
     createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-    applicantsCount: 0
+    applicantsCount: 1
   },
   {
     id: 'job-3',
@@ -224,7 +242,7 @@ const DEFAULT_JOBS: JobOpening[] = [
     skillsRequired: ['C#', '.NET', 'React', 'TypeScript', 'SQL Server'],
     deadline: '2026-09-05',
     createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-    applicantsCount: 1
+    applicantsCount: 2
   },
   {
     id: 'job-4',
@@ -242,6 +260,42 @@ const DEFAULT_JOBS: JobOpening[] = [
     skillsRequired: ['Java', 'SQL', 'HTML/CSS', 'SDLC Basics'],
     deadline: '2026-10-01',
     createdAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
+    applicantsCount: 2
+  },
+  {
+    id: 'job-5',
+    companyId: 'company-amazon',
+    companyName: 'Amazon India',
+    title: 'AWS Cloud Solutions Intern',
+    type: 'Internship',
+    description: 'Work with cloud enterprise architects to design high-availability AWS serverless applications using Lambda, DynamoDB, API Gateway, and CloudFront.',
+    packageAmt: '80k / month',
+    eligibility: {
+      minCGPA: 8.2,
+      branches: ['CSE', 'IT'],
+      gradYears: [2026]
+    },
+    skillsRequired: ['AWS', 'Node.js', 'Python', 'Cloud Architecture'],
+    deadline: '2026-08-20',
+    createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    applicantsCount: 1
+  },
+  {
+    id: 'job-6',
+    companyId: 'company-goldman',
+    companyName: 'Goldman Sachs',
+    title: 'Quantitative Systems Analyst',
+    type: 'Full-Time',
+    description: 'Develop low-latency algorithmic trading systems and risk calculation microservices in C++20 and Python for high-frequency trading desks.',
+    packageAmt: '36 LPA',
+    eligibility: {
+      minCGPA: 8.5,
+      branches: ['CSE', 'IT', 'ECE'],
+      gradYears: [2026]
+    },
+    skillsRequired: ['C++', 'Algorithms', 'Linear Algebra', 'Python'],
+    deadline: '2026-09-15',
+    createdAt: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000).toISOString(),
     applicantsCount: 1
   }
 ];
@@ -259,10 +313,52 @@ const DEFAULT_APPLICATIONS: JobApplication[] = [
     studentCGPA: 9.1,
     status: 'Shortlisted',
     appliedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-    statusNotes: 'Passed resume screening. Coding test link dispatched.'
+    statusNotes: 'Passed resume screening. Technical Round 1 interview scheduled.'
   },
   {
     id: 'app-2',
+    jobId: 'job-5',
+    jobTitle: 'AWS Cloud Solutions Intern',
+    companyId: 'company-amazon',
+    companyName: 'Amazon India',
+    studentId: 'mock-student-id',
+    studentName: 'Aravind Sharma',
+    studentBranch: 'CSE',
+    studentCGPA: 9.1,
+    status: 'Rejected',
+    appliedAt: new Date(Date.now() - 9 * 24 * 60 * 60 * 1000).toISOString(),
+    statusNotes: 'Application evaluation complete. Candidate profile lacks requisite hands-on Kubernetes cluster administration & Terraform IaC credentials.'
+  },
+  {
+    id: 'app-3',
+    jobId: 'job-6',
+    jobTitle: 'Quantitative Systems Analyst',
+    companyId: 'company-goldman',
+    companyName: 'Goldman Sachs',
+    studentId: 'mock-student-id',
+    studentName: 'Aravind Sharma',
+    studentBranch: 'CSE',
+    studentCGPA: 9.1,
+    status: 'Rejected',
+    appliedAt: new Date(Date.now() - 11 * 24 * 60 * 60 * 1000).toISOString(),
+    statusNotes: 'Profile review complete. Looking for specialized Financial Engineering or Stochastic Math degree specialization.'
+  },
+  {
+    id: 'app-4',
+    jobId: 'job-3',
+    jobTitle: 'Software Development Engineer (SDE-1)',
+    companyId: 'company-microsoft',
+    companyName: 'Microsoft India',
+    studentId: 'mock-student-id',
+    studentName: 'Aravind Sharma',
+    studentBranch: 'CSE',
+    studentCGPA: 9.1,
+    status: 'Interview Scheduled',
+    appliedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    statusNotes: 'System Design Interview scheduled for next Monday at 2:00 PM IST.'
+  },
+  {
+    id: 'app-5',
     jobId: 'job-3',
     jobTitle: 'Software Development Engineer (SDE-1)',
     companyId: 'company-microsoft',
@@ -271,11 +367,26 @@ const DEFAULT_APPLICATIONS: JobApplication[] = [
     studentName: 'Priyanka Patel',
     studentBranch: 'ECE',
     studentCGPA: 8.5,
-    status: 'Applied',
-    appliedAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString()
+    status: 'Under Review',
+    appliedAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
+    statusNotes: 'Under review by Engineering Hiring Manager.'
   },
   {
-    id: 'app-3',
+    id: 'app-6',
+    jobId: 'job-1',
+    jobTitle: 'Associate Software Engineer',
+    companyId: 'mock-hr-id',
+    companyName: 'Google India',
+    studentId: 'student-2',
+    studentName: 'Priyanka Patel',
+    studentBranch: 'ECE',
+    studentCGPA: 8.5,
+    status: 'Rejected',
+    appliedAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString(),
+    statusNotes: 'Did not meet the core Computer Science Engineering / IT stream criteria specified for this opening track.'
+  },
+  {
+    id: 'app-7',
     jobId: 'job-4',
     jobTitle: 'Systems Engineer',
     companyId: 'company-tata',
@@ -286,7 +397,21 @@ const DEFAULT_APPLICATIONS: JobApplication[] = [
     studentCGPA: 7.2,
     status: 'Selected',
     appliedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-    statusNotes: 'Congratulations! Final offer details shared via email.'
+    statusNotes: 'Congratulations! Official placement offer letter released via email.'
+  },
+  {
+    id: 'app-8',
+    jobId: 'job-1',
+    jobTitle: 'Associate Software Engineer',
+    companyId: 'mock-hr-id',
+    companyName: 'Google India',
+    studentId: 'student-3',
+    studentName: 'Rohan Mehra',
+    studentBranch: 'IT',
+    studentCGPA: 7.2,
+    status: 'Rejected',
+    appliedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    statusNotes: 'Candidate CGPA (7.2) is below the mandatory minimum CGPA threshold (8.0) set by recruiter.'
   }
 ];
 
@@ -294,13 +419,29 @@ const DEFAULT_NOTIFICATIONS: NotificationItem[] = [
   {
     id: 'notif-1',
     userId: 'mock-student-id',
-    title: 'Resume Shortlisted',
-    message: 'Your application for Associate Software Engineer at Google India has been Shortlisted! Check details.',
+    title: 'Application Status Updated',
+    message: 'Your application for AWS Cloud Solutions Intern at Amazon India status: Rejected. Feedback: Missing Kubernetes experience.',
     read: false,
-    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
+    createdAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString()
   },
   {
     id: 'notif-2',
+    userId: 'mock-student-id',
+    title: 'Interview Scheduled!',
+    message: 'Microsoft India scheduled your interview for Software Development Engineer (SDE-1) for Monday 2:00 PM IST.',
+    read: false,
+    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
+  },
+  {
+    id: 'notif-3',
+    userId: 'mock-student-id',
+    title: 'Resume Shortlisted',
+    message: 'Your application for Associate Software Engineer at Google India has been Shortlisted! Check details.',
+    read: true,
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
+  },
+  {
+    id: 'notif-4',
     userId: 'mock-student-id',
     title: 'New Job Drive Posted',
     message: 'Google India just posted a new opening: Cloud DevOps Intern. Click to apply!',
@@ -316,6 +457,22 @@ const loadData = <T>(key: string, defaultVal: T[]): T[] => {
     localStorage.setItem(`cpp_${key}`, JSON.stringify(defaultVal));
     return defaultVal;
   }
+  
+  // If applications array in local storage lacks rejected items for mock student, force update defaults
+  if (key === 'applications') {
+    try {
+      const parsed = JSON.parse(data) as JobApplication[];
+      const hasRejected = parsed.some(a => a.status === 'Rejected');
+      if (!hasRejected) {
+        localStorage.setItem(`cpp_${key}`, JSON.stringify(defaultVal));
+        return defaultVal;
+      }
+    } catch (e) {
+      localStorage.setItem(`cpp_${key}`, JSON.stringify(defaultVal));
+      return defaultVal;
+    }
+  }
+
   return JSON.parse(data);
 };
 
